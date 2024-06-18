@@ -134,6 +134,8 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
+search_champion = st.text_input('챔피언 검색', key='search_champion')
+
 # Streamlit markdown으로 구성!
 st.markdown(
     f"""
@@ -149,5 +151,3 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
-
-search_champion = st.text_input('챔피언 검색', key='search_champion')
