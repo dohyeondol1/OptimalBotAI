@@ -28,6 +28,8 @@ st.markdown(
         z-index: 1;
         background-color: black;
     }
+
+    /*챔피언 목록 사이드 바*/
     .sidebar {
         padding: 10px;
         background-color: #d3d3d3;
@@ -39,6 +41,8 @@ st.markdown(
         flex-shrink: 0;
         z-index: 2;
     }
+
+    /*사이드 바 자식 요소 설정*/
     .content {
         width: 100%;
         height: 80%;
@@ -57,6 +61,7 @@ st.markdown(
         text-align: left;
         color: black;
     }
+
     /*검색창*/
     .search-champion {
         margin: 0 auto;
@@ -65,6 +70,8 @@ st.markdown(
         background-color: #888888;
         border-radius: 10px;
     }
+
+    /*챔피언 목록 틀*/
     .champion-list-content {
         width: 300px;
         height: 350px;
