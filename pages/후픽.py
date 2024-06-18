@@ -47,7 +47,9 @@ st.markdown(
         flex-direction: column;
         justify-content: center;
     }
-    .enemy-bottom-champ-list {
+
+    /*"상대팀 바텀 챔피언" 타이틀*/
+    .enemy-bottom-champ-title {
         margin-top: 10px;
         width: 100%;
         font-size: 15px;
@@ -133,7 +135,7 @@ st.markdown(
         <div class='divider'></div>
         <div class='sidebar'>
             <div class='content'>
-                <h4 class='enemy-bottom-champ-list'>상대 팀 바텀 챔피언</h4>
+                <h4 class='enemy-bottom-champ-title'>상대 팀 바텀 챔피언</h4>
                 <div class='search-champion'></div>
                 <div class='champion-list-content'></div>
             </div>
