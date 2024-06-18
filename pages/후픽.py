@@ -7,6 +7,20 @@ st.set_page_config(layout="wide")
 # 사이드바에 들어가는 타이틀
 st.sidebar.title('OptimalBotAI')
 
+# Streamlit 페이지 스타일링 설정 수정하기
+st.markdown("""
+    <style>
+    /*페이지 padding값 수정*/
+    .st-emotion-cache-1jicfl2 {
+        padding: 4rem 1rem 4rem 4rem;
+    }
+    @media (min-width: 576px) {
+        .st-emotion-cache-1jicfl2 {
+        padding: 4rem 1rem 4rem 4rem;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 champions_ad=[
     {"name":"애쉬","image_url":"https://opgg-static.akamaized.net/meta/images/lol/14.12.1/champion/Ashe.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto:good,a_0,f_webp,w_160,h_160&v=1717557723274"},
