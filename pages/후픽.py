@@ -63,14 +63,50 @@ champions_sup=[
 ]
 
 html_ad = ""
-for item in champions_ad:
-    name=item["name"]
-    src = item["image_url"]
-    html_ad += f"<a href='#' id='{name}'><img src='{src}'></a>"
+for champion in champions_ad:
+    name = champion["name"]
+    image_url = champion["image_url"]
+    html_ad += f'<a href="#" id="{name}"><img src="{image_url}" style="margin: 10px; border-radius: 50%;" width="100" height="100"></a>'
 
 html_sup = ""
-for item in champions_sup:
-    name=item["name"]
-    src = item["image_url"]
-    html_sup += f"<a href='#' id='{name}'><img src='{src}'></a>"
-    
+for champion in champions_sup:
+    name = champion["name"]
+    image_url = champion["image_url"]
+    html_sup += f'<a href="#" id="{name}"><img src="{image_url}" style="margin: 10px; border-radius: 50%;" width="100" height="100"></a>'
+
+# Streamlit 페이지 구성
+st.set_page_config(layout="wide")
+
+# CSS 스타일 추가
+st.markdown("""
+    <style>
+    .champion-image {
+        margin: 10px;
+        width: 80px;
+        height: 80px;
+        display: block;
+        border-radius: 50%;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# 컬럼을 사용하여 페이지 레이아웃 설정
+col1, col2 = st.columns([1, 4])
+
+# 왼쪽 컬럼 (사이드바 역할)
+with col1:
+    st.markdown('## Champions - AD')
+    for champion in champions_ad:
+        name = champion["name"]
+        image_url = champion["image_url"]
+        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+
+    st.markdown('## Champions - Support')
+    for champion in champions_sup:
+        name = champion["name"]
+        image_url = champion["image_url"]
+        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+
+# 오른쪽 컬럼 (메인 콘텐츠)
+with col2:
+    st.write("여기에 메인 콘텐츠를 추가합니다.")
