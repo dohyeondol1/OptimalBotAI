@@ -1,4 +1,5 @@
 import streamlit as st
+from st_click_detector import click_detector
 
 # Streamlit 페이지 구성
 st.set_page_config(layout="wide")
@@ -6,137 +7,6 @@ st.set_page_config(layout="wide")
 # 사이드바에 들어가는 타이틀
 st.sidebar.title('OptimalBotAI')
 
-# Streamlit 페이지에 CSS 적용하기!
-st.markdown(
-    """
-    <style>
-    body {
-        overflow: hidden;
-    }
-    .main {
-        background-color: #f0f2f6;
-        display: flex;
-        flex-direction: row;
-        height: 100vh;
-        justify-content: center; /* 가운데 정렬 추가 */
-    }
-    .sidebar {
-        padding: 10px;
-        background-color: #d3d3d3;
-        position: relative;
-        user-select: auto;
-        width: 336px;
-        height: 842px;
-        box-sizing: border-box;
-        flex-shrink: 0;
-    }
-    .champion-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-        align-items: center; /* 가운데 정렬 추가 */
-    }
-    .champion-list-content {
-        width: 300px;
-        height: 350px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-    .recommend-champ-title {
-        margin-top: 10px;
-        font-size: 15px;
-        font-weight: bold;
-        text-align: left;
-        color: black;
-    }
-    .divider {
-        width: 100%;
-        height: 2px;
-        position: absolute;
-        top: 50%;
-        z-index: 99999;
-        background-color: black;
-    }
-
-    /* 미디어 쿼리 패딩 제거 */
-    @media (min-width: 576px) {
-        .st-emotion-cache-1jicfl2 {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-    }
-
-    /* 스크롤바 제거 */
-    .st-emotion-cache-1jicfl2 {
-        width: 100%;
-        padding: 0;
-        min-width: auto;
-        max-width: initial;
-    }
-
-    /* streamlit 기본 상단 바 제거 */
-    .st-emotion-cache-h4xjwg {
-        height: 0;
-    }
-
-    /* 여백 안남게 scroll-margin 제거 */
-    .st-emotion-cache-1jzia57 h1, 
-    .st-emotion-cache-1jzia57 h2, 
-    .st-emotion-cache-1jzia57 h3, 
-    .st-emotion-cache-1jzia57 h4, 
-    .st-emotion-cache-1jzia57 h5, 
-    .st-emotion-cache-1jzia57 h6, 
-    .st-emotion-cache-1jzia57 span {
-        scroll-margin-top: 0;
-    }
-
-    /* streamlit에서 기본으로 제공하는 공유, 깃허브 링크 등등 바 설정 */
-    .st-emotion-cache-15ecox0.ezrtsby0 {
-        background-color: black;
-        border-radius: 10px;
-    }
-
-    /* 화면 상단 gap 제거 */
-    .st-emotion-cache-1wmy9hl div {
-        gap: 0;
-    }
-
-    /* 여백 제거 */
-    .st-emotion-cache-ul70r3 {
-        margin-bottom: 0;
-    }
-
-    .champion-image {
-        border-radius: 50%;
-        width: 160px;
-        height: 160px;
-        object-fit: cover;
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
-
-# Streamlit markdown으로 구성!
-st.markdown(
-    """
-    <div class='divider'></div>
-    <div class='sidebar'>
-        <div class='champion-section'>
-            <h5 class='recommend-champ-title'>원딜 추천 챔피언</h5>
-            <div class="champion-list-content">
-            </div>
-        </div>
-        <div class='champion-section'>
-            <h5 class='recommend-champ-title'>서폿 추천 챔피언</h5>
-            <div class="champion-list-content">
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True
-)
 
 champions_ad=[{
     "name" : "애쉬",
@@ -335,19 +205,320 @@ champions_sup=[{
               
 ]
 
+
+def call_example(query):
+    examples={
+        "징크스": {
+            "counter": ["트위치", "애쉬", "드레이븐", "트리스타나", "칼리스타", "바루스", "아펠리오스"],
+            "team": ["쓰레쉬", "룰루", "밀리오", "브라움", "탐켄치"]
+        },
+        "진": {
+            "counter": ["트위치","제리","칼리스타"],
+            "team": ["제라스", "자이라", "애쉬", "벨코즈", "노틸러스", "파이크", "샤코"]
+        },
+        "트위치": {
+            "counter": ["바루스", "칼리스타", "드레이븐", "닐라"],
+            "team": ["룰루", "유미", "라칸", "브라움", "질리언", "타릭"]
+        },
+        "루시안": {
+            "counter": ["애쉬", "케이틀린", "드레이븐", "칼리스타", "바루스"],
+            "team": ["밀리오", "나미", "타릭", "브라움", "레오나", "노틸러스", "마오카이", "소나"]
+        },
+        "코그모": {
+            "counter": ["케이틀린", "바루스", "드레이븐"],
+            "team": ["룰루", "유미", "밀리오", "탐켄치", "브라움", "노틸러스", "쓰레쉬", "타릭"]
+        },
+        "닐라": {
+            "team": ["소라카", "라칸", "타릭", "유미"]
+        },
+        "애쉬": {
+            "counter": ["바루스", "닐라", "드레이븐", "칼리스타", "사미라", "트위치"],
+            "team": ["룰루", "쓰레쉬", "밀리오", "탐켄치", "브라움", "노틸러스", "자이라", "세라핀", "레오나", "바드"]
+        },
+        "케이틀린": {
+            "counter": ["진", "애쉬", "바루스", "칼리스타", "드레이븐"],
+            "team": ["럭스", "모르가나", "바드", "밀리오", "쓰레쉬", "브라움", "룰루", "나미", "소나", "잔나", "세라핀"]
+        },
+        "사미라": {
+            "team": ["노틸러스", "알리스타", "렐", "마오카이", "라칸", "스웨인", "파이크"]
+        },
+        "이즈리얼": {
+            "counter": ["바루스", "칼리스타", "드레이븐", "케이틀린", "애쉬", "베인", "카이사", "루시안", "사미라", "트위치"],
+            "team": ["카르마", "레오나", "노틸러스", "브라움", "파이크", "소라카", "제라스", "럭스"]
+        },
+            "시비르": {
+            "counter": ["진", "제리", "징크스", "이즈리얼"],
+            "team": ["카르마", "탐켄치", "브라움", "쓰레쉬", "룰루", "밀리오", "유미", "세라핀", "마오카이", "벨코즈"]
+        },
+        "제리": {
+            "counter": ["드레이븐", "칼리스타", "바루스", "트위치", "징크스", "트리스타나"],
+            "team": ["유미", "룰루", "밀리오", "브라움", "잔나", "노틸러스", "레오나", "라칸"]
+        },
+        "미스 포츈": {
+            "counter": ["드레이븐", "칼리스타", "사미라", "트리스타나", "트위치", "루시안"],
+            "team": ["레오나", "노틸러스", "라칸", "세라핀", "타릭", "니코", "알리스타", "렐"]
+        },
+        "스몰더": {
+            "counter": ["제리", "베인", "이즈리얼"],
+            "team": ["라칸", "밀리오", "유미", "탐켄치"]
+        },
+        "카이사": {
+            "counter": ["바루스", "케이틀린", "칼리스타", "아펠리오스", "드레이븐", "코그모", "루시안"],
+            "team": ["노틸러스", "마오카이", "타릭", "렐", "알리스타", "레오나", "파이크", "라칸", "블리츠크랭크"]
+        },
+        "베인": {
+            "counter": ["진", "이즈리얼", "사미라"],
+            "team": ["쓰레쉬", "브라움", "룰루", "밀리오", "알리스타", "마오카이", "타릭", "라칸"]
+        },
+        "트리스타나": {
+            "counter": ["바루스", "칼리스타", "드레이븐", "케이틀린"],
+            "team": ["라칸", "룰루", "유미", "레오나", "노틸러스", "타릭", "알리스타", "밀리오"]
+        },
+        "아펠리오스": {
+            "counter": ["바루스", "칼리스타", "트위치", "루시안", "닐라", "애쉬"],
+            "team": ["쓰레쉬", "룰루", "밀리오", "마오카이", "세라핀", "노틸러스", "질리언", "잔나", "레나타 글라스크"]
+        },
+        "드레이븐": {
+            "counter": ["아펠리오스", "바루스", "칼리스타", "루시안"],
+            "team": ["잔나", "노틸러스", "쓰레쉬", "밀리오", "타릭", "렐", "블리츠크랭크", "파이크", "레나타 글라스크"]
+        },
+        "자야": {
+            "counter": ["바루스", "칼리스타", "케이틀린", "드레이븐", "애쉬"],
+            "team": ["라칸", "블리츠크랭크", "노틸러스", "쓰레쉬", "브라움", "탐켄치", "바드", "알리스타", "나미", "렐", "레나타 글라스크", "레오나"]
+        },
+        "칼리스타": {
+            "counter": ["바루스", "드레이븐", "케이틀린"],
+            "team": ["쓰레쉬", "노틸러스", "블리츠크랭크", "파이크", "마오카이", "타릭", "렐"]
+        },
+        "바루스": {
+            "counter": ["베인","스몰더","시비르"],
+            "team": ["룰루","브라움"]
+        },
+        "애니": {
+            "counter": ["파이크", "레오на"]
+        },
+        "블리츠크랭크": {
+            "counter": ["브라움", "아무무", "라칸", "노틸러스", "타릭"]
+        },
+        "마오카이": {
+            "counter": ["브라움"]
+        },
+        "아무무": {
+            "counter": ["렐", "브라움"]
+        },
+        "하이머딩거": {
+            "counter": ["애쉬", "진", "케이틀린", "럭스", "바드", "소라카"]
+        },
+        "렐": {
+            "counter": ["알리스타", "레나타 글라스크"]
+        },
+        "애쉬": {
+            "counter": ["파이크", "블리츠크랭크"]
+        },
+        "노틸러스": {
+            "counter": ["세트", "레오나", "레나타 글라스크"]
+        },
+        "파이크": {
+            "counter": ["라칸", "하이머딩거", "사미라+탱커서폿"]
+        },
+        "쓰레쉬": {
+            "counter": ["하이머딩거", "블리츠크랭크"]
+        },
+        "라칸": {
+            "counter": ["케이틀린", "케이틀린+럭스", "징크스+쓰레쉬", "바드", "모르가나"]
+        },
+        "레오나": {
+            "counter": ["모르가나", "쓰레쉬", "알리스타", "레나타 글라스크"]
+        },
+        "카르마": {
+            "counter": ["시비르", "시비르+유미", "애쉬", "아무무", "블리츠크랭크", "노틸러스"]
+        },
+        "럭스": {
+            "counter": ["블리츠크랭크", "파이크", "진+카르마", "이즈리얼+카르마"]
+        },
+        "나미": {
+            "counter": ["케이틀린", "럭스", "애쉬", "카르마", "진+카르마"]
+        },
+        "바드": {
+            "counter": ["블리츠크랭크", "케이틀린+럭스", "룰루", "진+카르마", "세나"]
+        },
+        "알리스타": {
+            "counter": ["사일러스", "모르가나", "애쉬+룰루", "뽀삐"]
+        },
+        "제라스": {
+            "counter": ["마법공학점멸드는 서폿"]
+        },
+        "스웨인": {
+            "counter": ["애쉬", "카르마"]
+        },
+        "자크": {
+            "counter": ["세트", "잔나", "레나타 글라스크", "뽀삐"]
+        },
+        "룰루": {
+            "counter": ["애쉬", "세나", "카르마", "제라스", "파이크", "블리츠크랭크"]
+        },
+        "소라카": {
+            "counter": ["카르마", "유미", "루시안+나미", "애쉬", "노틸러스", "아무무"]
+        },
+        "샤코": {
+            "counter": ["니코", "자이라", "하이머딩거"]
+        },
+        "모르가나": {
+            "counter": ["카르마", "애쉬"]
+        },
+        "질리언": {
+            "counter": ["블리츠크랭크", "카르마", "애니"]
+        },
+        "타릭": {
+            "counter": ["바드", "모르가나"]
+        },
+        "자이라": {
+            "counter": ["진+제라스", "바드", "레오나"]
+        },
+        "레나타 글라스크": {
+            "counter": ["애쉬", "제라스", "케이틀린", "럭스", "자이라", "블리츠크랭크"]
+        },
+        "소나": {
+            "counter": ["블리츠크랭크", "파이크", "애쉬", "카르마"]
+        },
+        "벨코즈": {
+            "counter": ["마법공학점멸드는 서폿", "브랜드"]
+        },
+        "유미": {
+            "counter": ["쓰레쉬", "노틸러스"]
+        },
+        "브라움": {
+            "counter": ["라칸"]
+        },
+        "세라핀": {
+            "counter": ["블리츠크랭크", "파이크", "애쉬", "카르마"]
+        },
+        "세나": {
+            "counter": ["블리츠크랭크", "파이크", "애쉬", "카르마"]
+        },
+        "트위치": {
+            "counter": ["바드"]
+        },
+        "잔나": {
+            "counter": ["블리츠크랭크"]
+        },
+        "피들스틱": {
+            "counter": ["카르마", "애쉬", "케이틀린", "럭스", "블리츠크랭크"]
+        },
+        "판테온": {
+            "counter": ["레오나", "타릭", "애쉬"]
+        },
+        "세트": {
+            "counter": ["판테온", "블리츠크랭크", "렐"]
+        },
+        "미스 포츈": {
+            "counter": ["블리츠크랭크", "파이크", "애쉬", "카르마"]
+        },
+        "탐켄치": {
+            "counter": ["블리츠크랭크", "렐", "파이크"]
+        },
+        "직스": {
+            "counter":["칼리스타","루시안","트리스타나"],
+            "team":["레오나","파이크","세나"]
+
+        },
+        "미스포츈": {
+            "counter":["칼리스타","루시안","트리스타나","사미라"],
+            "team":["레오나","노틸러스","블리츠크랭크"]
+
+        },
+        "코르키": {
+            "counter":["드레이븐","케이틀린","트리스타나"],
+            "team":["쓰레쉬","블리츠크랭크","노틸러스"]
+
+        }
+    }
+    return examples.get(query, {"team": [], "counter": []})
+
+html_ad = ""
+for item in champions_ad:
+    name=item["name"]
+    src = item["image_url"]
+    html_ad += f"<a href='#' id='{name}'><img src='{src}'></a>"
+
+html_sup = ""
+for item in champions_sup:
+    name=item["name"]
+    src = item["image_url"]
+    html_sup += f"<a href='#' id='{name}'><img src='{src}'></a>"
+    
+
+
+
 # 중앙 정렬을 위한 컨테이너
-with st.container():
-    cols = st.columns(6)
-    for i in range(len(champions_ad)):
-        with cols[i % 6]:
-            champion_ad = champions_ad[i]
-            st.image(champion_ad["image_url"], caption=champion_ad["name"])
-            
+col1, col2 = st.columns(2)
+clicked=None
+with col1:
+    with st.container():
+        clicked = click_detector(html_ad)
+        #cols = st.columns(6)
+        #for i in range(len(champions_ad)):
+        #    with cols[i % 6]:
+        #        champion_ad = champions_ad[i]
+        #        st.image(champion_ad["image_url"], caption=champion_ad["name"])
+with col2:
+    with st.container():
+        #placeholder = st.empty()
+        st.write(clicked)
+        # call openai
+        result = call_example(clicked)
+        #st.write(result)
+        # call openai
+        st.subheader("Team")
+        for item in result['team']:
+            for i in champions_ad:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+            for i in champions_sup:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+        st.subheader("Counter")
+        for item in result['counter']:
+            for i in champions_ad:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+            for i in champions_sup:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+
 st.divider()
 
-with st.container():
-    cols = st.columns(6)
-    for i in range(len(champions_sup)):
-        with cols[i % 6]:
-            champion_sup = champions_sup[i]
-            st.image(champion_sup["image_url"], caption=champion_sup["name"])
+col1, col2 = st.columns(2)
+clicked=None
+with col1:
+    with st.container():
+        clicked = click_detector(html_sup)
+        #cols = st.columns(6)
+        #for i in range(len(champions_ad)):
+        #    with cols[i % 6]:
+        #        champion_ad = champions_ad[i]
+        #        st.image(champion_ad["image_url"], caption=champion_ad["name"])
+with col2:
+    with st.container():
+        #placeholder = st.empty()
+        st.write(clicked)
+        # call openai
+        result = call_example(clicked)
+        #st.write(result)
+        # call openai
+        st.subheader("Team")
+        for item in result['team']:
+            for i in champions_ad:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+            for i in champions_sup:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+        st.subheader("Counter")
+        for item in result['counter']:
+            for i in champions_ad:
+                if i["name"] == item:
+                    st.image(i['image_url'])
+            for i in champions_sup:
+                if i["name"] == item:
+                    st.image(i['image_url'])
