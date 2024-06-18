@@ -49,7 +49,6 @@ st.markdown(
         display: flex;
         margin-bottom: 20px;
         flex-direction: column;
-        justify-content: center;
     }
 
     /*"상대팀 바텀 챔피언" 타이틀*/
