@@ -55,7 +55,9 @@ st.markdown(
         text-align: left;
         color: black;
     }
+    /*검색창*/
     .search-champion {
+        margin: 0 auto;
         width: 80%;
         height: 40px;
         background-color: #888888;
@@ -139,3 +141,5 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
+
+search_champion = st.text_input('챔피언 검색', key='search_champion')
