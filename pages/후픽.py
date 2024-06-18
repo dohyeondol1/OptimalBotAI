@@ -142,7 +142,7 @@ st.markdown(
         <div class='sidebar'>
             <div class='content'>
                 <h4 class='enemy-bottom-champ-title'>상대 팀 바텀 챔피언</h4>
-                <div class='search-champion'></div>
+                <div class='search-champion'>{search_champion}</div>
                 <div class='champion-list-content'></div>
             </div>
         </div>
