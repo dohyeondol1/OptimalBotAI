@@ -74,9 +74,6 @@ for champion in champions_sup:
     image_url = champion["image_url"]
     html_sup += f'<a href="#" id="{name}"><img src="{image_url}" style="margin: 10px; border-radius: 50%;" width="100" height="100"></a>'
 
-# Streamlit 페이지 구성
-st.set_page_config(layout="wide")
-
 # CSS 스타일 추가
 st.markdown("""
     <style>
