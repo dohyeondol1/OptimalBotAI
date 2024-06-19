@@ -19,7 +19,9 @@ st.markdown("""
         padding: 4rem 1rem 4rem 4rem;
         }
     }
-
+    .st-emotion-cache-1wmy9hl >div {
+        display: none;
+    }
     
     </style>
     """, unsafe_allow_html=True)
