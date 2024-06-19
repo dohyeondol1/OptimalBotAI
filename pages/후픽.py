@@ -94,7 +94,7 @@ st.markdown("""
     .champion-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        /*gap: 10px;*/
+        gap: 10px;
         justify-items: center;
     }
     .champion-image {
@@ -113,18 +113,16 @@ col1, col2 = st.columns([1, 4])
 # 왼쪽 컬럼 (사이드바 역할)
 with col1:
     st.markdown('Champions - AD')
-    ad_html = '<div class="champion-container">'
+    st.markdown('<div class="champion-container">', unsafe_allow_html=True)
     for champion in champions_ad:
-        name = champion["name"]
-        image_url = champion["image_url"]
-        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+        st.markdown(f'<img src="{champion["image_url"]}" class="champion-image">', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('Champions - Support')
     sup_html = '<div class="champion-container">'
     for champion in champions_sup:
-        name = champion["name"]
-        image_url = champion["image_url"]
-        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+        st.markdown(f'<img src="{champion["image_url"]}" class="champion-image">', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 컬럼 (메인 콘텐츠)
 with col2:
