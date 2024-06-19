@@ -114,7 +114,7 @@ if "selected_champion" not in st.session_state:
     st.session_state.selected_champion = None
 
 # 왼쪽 컬럼 (사이드바 역할)
-with col1:
+with side_col:
     st.markdown('Champions - AD')
     ad_html = '<div class="champion-container">'
     for champion in champions_ad:
@@ -131,7 +131,7 @@ with col1:
         st.session_state.selected_champion = None
 
 # 오른쪽 컬럼 (메인 콘텐츠)
-with col2:
+with main_col:
     st.write("여기에 메인 콘텐츠를 추가합니다.")
 
 # 선택된 챔피언 출력
