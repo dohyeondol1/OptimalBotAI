@@ -19,6 +19,15 @@ st.markdown("""
         padding: 4rem 1rem 4rem 4rem;
         }
     }
+    /**/
+    .st-emotion-cache-1wmy9hl {
+        display: flex;
+        flex-direction: row;
+    }
+    .st-emotion-cache-1wmy9hl div {
+        display: none;
+    }
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -95,7 +104,7 @@ st.markdown("""
         margin: 10px;
         width: 50px;
         height: 50px;
-        display: inline-block
+        display: inline-block;
         border-radius: 50%;
         cursor: pointer;
         float: left;
@@ -104,10 +113,10 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # 컬럼을 사용하여 페이지 레이아웃 설정
-col1, col2 = st.columns([1, 5])
+side_col, main_col = st.columns([1, 5])
 
 # 왼쪽 컬럼 (사이드바 역할)
-with col1:
+with side_col:
     st.markdown('### Champions - AD')
     for champion in champions_ad:
         st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
@@ -117,5 +126,5 @@ with col1:
         st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
 
 # 오른쪽 컬럼 (메인 콘텐츠)
-with col2:
+with main_col:
     st.write("여기에 메인 콘텐츠를 추가합니다.")
