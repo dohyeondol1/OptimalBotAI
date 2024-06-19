@@ -295,7 +295,7 @@ def call_example(query):
             "team": ["룰루","브라움"]
         },
         "애니": {
-            "counter": ["파이크", "레오на"]
+            "counter": ["파이크", "레오나"]
         },
         "블리츠크랭크": {
             "counter": ["브라움", "아무무", "라칸", "노틸러스", "타릭"]
@@ -319,34 +319,34 @@ def call_example(query):
             "counter": ["세트", "레오나", "레나타 글라스크"]
         },
         "파이크": {
-            "counter": ["라칸", "하이머딩거", "사미라+탱커서폿"]
+            "counter": ["라칸", "하이머딩거"]
         },
         "쓰레쉬": {
             "counter": ["하이머딩거", "블리츠크랭크"]
         },
         "라칸": {
-            "counter": ["케이틀린", "케이틀린+럭스", "징크스+쓰레쉬", "바드", "모르가나"]
+            "counter": ["케이틀린", "럭스", "쓰레쉬", "바드", "모르가나"]
         },
         "레오나": {
             "counter": ["모르가나", "쓰레쉬", "알리스타", "레나타 글라스크"]
         },
         "카르마": {
-            "counter": ["시비르", "시비르+유미", "애쉬", "아무무", "블리츠크랭크", "노틸러스"]
+            "counter": ["시비르", "유미", "애쉬", "아무무", "블리츠크랭크", "노틸러스"]
         },
         "럭스": {
-            "counter": ["블리츠크랭크", "파이크", "진+카르마", "이즈리얼+카르마"]
+            "counter": ["블리츠크랭크", "파이크", "카르마", "이즈리얼"]
         },
         "나미": {
-            "counter": ["케이틀린", "럭스", "애쉬", "카르마", "진+카르마"]
+            "counter": ["케이틀린", "럭스", "애쉬", "카르마"]
         },
         "바드": {
-            "counter": ["블리츠크랭크", "케이틀린+럭스", "룰루", "진+카르마", "세나"]
+            "counter": ["블리츠크랭크","럭스", "룰루", "카르마", "세나"]
         },
         "알리스타": {
-            "counter": ["사일러스", "모르가나", "애쉬+룰루", "뽀삐"]
+            "counter": ["사일러스", "모르가나", "룰루", "뽀삐"]
         },
         "제라스": {
-            "counter": ["마법공학점멸드는 서폿"]
+            "counter": ["블리츠크랭크","파이크","알리스타"]
         },
         "스웨인": {
             "counter": ["애쉬", "카르마"]
@@ -358,7 +358,7 @@ def call_example(query):
             "counter": ["애쉬", "세나", "카르마", "제라스", "파이크", "블리츠크랭크"]
         },
         "소라카": {
-            "counter": ["카르마", "유미", "루시안+나미", "애쉬", "노틸러스", "아무무"]
+            "counter": ["카르마", "유미", "나미", "애쉬", "노틸러스", "아무무"]
         },
         "샤코": {
             "counter": ["니코", "자이라", "하이머딩거"]
@@ -373,7 +373,7 @@ def call_example(query):
             "counter": ["바드", "모르가나"]
         },
         "자이라": {
-            "counter": ["진+제라스", "바드", "레오나"]
+            "counter": ["제라스", "바드", "레오나"]
         },
         "레나타 글라스크": {
             "counter": ["애쉬", "제라스", "케이틀린", "럭스", "자이라", "블리츠크랭크"]
@@ -382,7 +382,7 @@ def call_example(query):
             "counter": ["블리츠크랭크", "파이크", "애쉬", "카르마"]
         },
         "벨코즈": {
-            "counter": ["마법공학점멸드는 서폿", "브랜드"]
+            "counter": ["블리츠크랭크","파이크","알리스타", "브랜드"]
         },
         "유미": {
             "counter": ["쓰레쉬", "노틸러스"]
@@ -434,6 +434,7 @@ def call_example(query):
         }
     }
     return examples.get(query, {"team": [], "counter": []})
+
 
 html_ad = ""
 for item in champions_ad:
@@ -506,14 +507,10 @@ with col2:
         result = call_example(clicked)
         #st.write(result)
         # call openai
-        st.subheader("Team")
-        for item in result['team']:
-            for i in champions_ad:
-                if i["name"] == item:
-                    st.image(i['image_url'])
-            for i in champions_sup:
-                if i["name"] == item:
-                    st.image(i['image_url'])
+
+        #서폿 조합 코드
+        #L_____
+        
         st.subheader("Counter")
         for item in result['counter']:
             for i in champions_ad:
