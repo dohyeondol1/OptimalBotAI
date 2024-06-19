@@ -108,24 +108,35 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # 컬럼을 사용하여 페이지 레이아웃 설정
-col1, col2 = st.columns([1, 4])
+side_col, main_col = st.columns([1, 4])
+
+# 챔피언 목록 컬럼 설정
+cols = st.columns(3)
 
 # 왼쪽 컬럼 (사이드바 역할)
-with col1:
+with side_col:
     st.markdown('Champions - AD')
     ad_html = '<div class="champion-container">'
-    for champion in champions_ad:
-        name = champion["name"]
-        image_url = champion["image_url"]
-        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+
+    for i, champion in enumerate(champions_ad):
+    with cols[i % 3]:
+        ad_html += f'<img src="{champion["image_url"]}" alt="{champion["name"]}" class="champion-image">'
+        if click_detector.image(champion["image_url"], key=champion["name"]):
+            st.session_state.selected_champion = champion["name"]
+    ad_html += '</div>'
+    st.markdown(ad_html, unsafe_allow_html=True)
+    
+    
 
     st.markdown('Champions - Support')
     sup_html = '<div class="champion-container">'
     for champion in champions_sup:
         name = champion["name"]
         image_url = champion["image_url"]
-        st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
+        sup_html += f'<img src="{image_url}" alt="{name}" class="champion-image">'
+    sup_html += '</div>'
+    st.markdown(sup_html, unsafe_allow_html=True)
 
 # 오른쪽 컬럼 (메인 콘텐츠)
-with col2:
+with main_col:
     st.write("여기에 메인 콘텐츠를 추가합니다.")
