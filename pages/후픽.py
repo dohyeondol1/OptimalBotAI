@@ -101,8 +101,9 @@ st.markdown("""
         margin: 10px;
         width: 50px;
         height: 50px;
-        display: inline;
+        display: inline-block;
         border-radius: 50%;
+        cursor: pointer;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -112,16 +113,16 @@ col1, col2 = st.columns([1, 4])
 
 # 왼쪽 컬럼 (사이드바 역할)
 with col1:
-    st.markdown('Champions - AD')
+    st.markdown('### Champions - AD')
     st.markdown('<div class="champion-container">', unsafe_allow_html=True)
     for champion in champions_ad:
-        st.markdown(f'<img src="{champion["image_url"]}" class="champion-image">', unsafe_allow_html=True)
+        st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('Champions - Support')
-    sup_html = '<div class="champion-container">'
+    st.markdown('### Champions - Support')
+    st.markdown('<div class="champion-container">', unsafe_allow_html=True)
     for champion in champions_sup:
-        st.markdown(f'<img src="{champion["image_url"]}" class="champion-image">', unsafe_allow_html=True)
+        st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 컬럼 (메인 콘텐츠)
