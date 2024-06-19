@@ -118,10 +118,10 @@ with side_col:
     ad_html = '<div class="champion-container">'
 
     for i, champion in enumerate(champions_ad):
-    with cols[i % 3]:
-        ad_html += f'<img src="{champion["image_url"]}" alt="{champion["name"]}" class="champion-image">'
-        if click_detector.image(champion["image_url"], key=champion["name"]):
-            st.session_state.selected_champion = champion["name"]
+        with cols[i % 3]:
+            ad_html += f'<img src="{champion["image_url"]}" alt="{champion["name"]}" class="champion-image">'
+            if click_detector.image(champion["image_url"], key=champion["name"]):
+                st.session_state.selected_champion = champion["name"]
     ad_html += '</div>'
     st.markdown(ad_html, unsafe_allow_html=True)
     
