@@ -19,7 +19,7 @@ st.markdown("""
         padding: 4rem 1rem 4rem 4rem;
         }
     }
-    /**/
+
     .st-emotion-cache-1wmy9hl {
         display: flex;
         flex-direction: row;
@@ -27,7 +27,6 @@ st.markdown("""
     .st-emotion-cache-1wmy9hl div {
         display: none;
     }
-
     </style>
     """, unsafe_allow_html=True)
 
@@ -104,7 +103,6 @@ st.markdown("""
         margin: 10px;
         width: 50px;
         height: 50px;
-        display: inline-block;
         border-radius: 50%;
         cursor: pointer;
         float: left;
