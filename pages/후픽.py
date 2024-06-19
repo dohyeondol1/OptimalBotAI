@@ -109,33 +109,31 @@ st.markdown("""
 # 컬럼을 사용하여 페이지 레이아웃 설정
 side_col, main_col = st.columns([1, 4])
 
-# 챔피언 목록 컬럼 설정
-cols = st.columns(3)
+# 선택된 챔피언 저장
+if "selected_champion" not in st.session_state:
+    st.session_state.selected_champion = None
 
 # 왼쪽 컬럼 (사이드바 역할)
-with side_col:
+with col1:
     st.markdown('Champions - AD')
     ad_html = '<div class="champion-container">'
-
-    for i, champion in enumerate(champions_ad):
-        with cols[i % 3]:
-            ad_html += f'<img src="{champion["image_url"]}" alt="{champion["name"]}" class="champion-image">'
-            if click_detector.image(champion["image_url"], key=champion["name"]):
-                st.session_state.selected_champion = champion["name"]
+    for champion in champions_ad:
+        ad_html += f'''
+        <form action="#" method="post">
+            <input type="hidden" name="champion" value="{champion["name"]}">
+            <input type="image" src="{champion["image_url"]}" alt="{champion["name"]}" class="champion-image">
+        </form>
+        '''
     ad_html += '</div>'
     st.markdown(ad_html, unsafe_allow_html=True)
-    
-    
 
-    st.markdown('Champions - Support')
-    sup_html = '<div class="champion-container">'
-    for champion in champions_sup:
-        name = champion["name"]
-        image_url = champion["image_url"]
-        sup_html += f'<img src="{image_url}" alt="{name}" class="champion-image">'
-    sup_html += '</div>'
-    st.markdown(sup_html, unsafe_allow_html=True)
+    if st.button('선택 초기화'):
+        st.session_state.selected_champion = None
 
 # 오른쪽 컬럼 (메인 콘텐츠)
-with main_col:
+with col2:
     st.write("여기에 메인 콘텐츠를 추가합니다.")
+
+# 선택된 챔피언 출력
+if "selected_champion" in st.session_state and st.session_state.selected_champion:
+    st.write(f"선택된 챔피언: {st.session_state.selected_champion}")
