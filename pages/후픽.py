@@ -1,4 +1,5 @@
 import streamlit as st
+import openai
 from st_click_detector import click_detector
 
 # Streamlit 페이지 구성
@@ -83,18 +84,6 @@ champions_sup=[
     {"name":"나미","image_url":"https://opgg-static.akamaized.net/meta/images/lol/14.12.1/champion/Nami.png?image=c_crop,h_103,w_103,x_9,y_9/q_auto:good,a_0,f_webp,w_160,h_160&v=1717557723274"},           
 ]
 
-html_ad = ""
-for champion in champions_ad:
-    name = champion["name"]
-    image_url = champion["image_url"]
-    html_ad += f'<a href="#" id="{name}"><img src="{image_url}" style="margin: 10px; border-radius: 50%;" width="100" height="100"></a>'
-
-html_sup = ""
-for champion in champions_sup:
-    name = champion["name"]
-    image_url = champion["image_url"]
-    html_sup += f'<a href="#" id="{name}"><img src="{image_url}" style="margin: 10px; border-radius: 50%;" width="100" height="100"></a>'
-
 # CSS 스타일 추가
 st.markdown("""
     <style>
@@ -112,6 +101,21 @@ st.markdown("""
 # 컬럼을 사용하여 페이지 레이아웃 설정
 side_col, main_col = st.columns([1, 5])
 
+# 선택된 챔피언 리스트
+if 'selected_champions' not in st.session_state:
+    st.session_state['selected_champions'] = []
+
+selected_champions = st.session_state['selected_champions']
+
+# GPT-3 API 키 입력
+with main_col:
+    api_key = st.text_input("Enter your OpenAI API key:", type="password")
+    st.write("### 후픽 챔피언 조합")
+
+    if st.button("선택 초기화"):
+        selected_champions.clear()
+        st.session_state['selected_champions'] = selected_champions
+
 # 왼쪽 컬럼 (사이드바 역할)
 with side_col:
     st.markdown('### 원딜 챔피언')
@@ -121,7 +125,10 @@ with side_col:
             if i + j < len(champions_ad):
                 champion = champions_ad[i + j]
                 with cols[j]:
-                    st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
+                    if st.button(champion["name"], key=f"ad_{champion['name']}"):
+                        if len(selected_champions) < 2 and champion["name"] not in selected_champions:
+                            selected_champions.append(champion["name"])
+                            st.session_state['selected_champions'] = selected_champions
 
     st.markdown('### 서폿 챔피언')
     for i in range(0, len(champions_sup), 3):
@@ -130,7 +137,48 @@ with side_col:
             if i + j < len(champions_sup):
                 champion = champions_sup[i + j]
                 with cols[j]:
-                    st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
+                    if st.button(champion["name"], key=f"sup_{champion['name']}"):
+                        if len(selected_champions) < 2 and champion["name"] not in selected_champions:
+                            selected_champions.append(champion["name"])
+                            st.session_state['selected_champions'] = selected_champions
+
 # 오른쪽 컬럼 (메인 콘텐츠)
 with main_col:
-    st.write("여기에 메인 콘텐츠를 추가합니다.")
+    if len(selected_champions) == 2:
+        st.write(f"선택된 챔피언: {selected_champions[0]}, {selected_champions[1]}")
+        
+        if api_key:
+            openai.api_key = api_key
+            if st.button("응답 보기"):
+                try:
+                    response = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo",  # Example model, replace with appropriate model
+                        messages=[
+                            {"role": "system", "content": f"{selected_champions[0]}, {selected_champions[1]}의 조합에 대해 설명해주세요."},
+                            {"role": "user", "content": "설명 보기"}
+                        ]
+                    )
+                    explanation = response['choices'][0]['message']['content'].strip()
+                    st.write("### 챔피언 조합 설명")
+                    st.write(explanation)
+
+                    # 가로선 추가
+                    st.markdown("---")
+
+                    response = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo",  # Example model, replace with appropriate model
+                        messages=[
+                            {"role": "system", "content": f"{selected_champions[0]}, {selected_champions[1]}의 조합에 대응할 조합을 하나 설명해주세요."},
+                            {"role": "user", "content": "설명 보기"}
+                        ]
+                    )
+                    explanation = response['choices'][0]['message']['content'].strip()
+                    st.write("### 대응 조합 설명")
+                    st.write(explanation)
+
+                except Exception as e:
+                    st.write("오류가 발생했습니다: ", e)
+        else:
+            st.write("API 키를 입력하세요.")
+    elif len(selected_champions) < 2:
+        st.write("두 챔피언을 선택하세요.")
