@@ -91,39 +91,30 @@ for champion in champions_sup:
 # CSS 스타일 추가
 st.markdown("""
     <style>
-    .champion-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        justify-items: center;
-    }
     .champion-image {
         margin: 10px;
         width: 50px;
         height: 50px;
-        display: inline-block;
+        display: inline-block
         border-radius: 50%;
         cursor: pointer;
+        float: left;
     }
     </style>
     """, unsafe_allow_html=True)
 
 # 컬럼을 사용하여 페이지 레이아웃 설정
-col1, col2 = st.columns([1, 4])
+col1, col2 = st.columns([1, 5])
 
 # 왼쪽 컬럼 (사이드바 역할)
 with col1:
     st.markdown('### Champions - AD')
-    st.markdown('<div class="champion-container">', unsafe_allow_html=True)
     for champion in champions_ad:
         st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('### Champions - Support')
-    st.markdown('<div class="champion-container">', unsafe_allow_html=True)
     for champion in champions_sup:
         st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 컬럼 (메인 콘텐츠)
 with col2:
