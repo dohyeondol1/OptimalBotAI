@@ -2,3 +2,4 @@ streamlit
 openai
 requests
 bs4
+st-click-detector
