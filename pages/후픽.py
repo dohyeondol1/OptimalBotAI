@@ -91,10 +91,16 @@ for champion in champions_sup:
 # CSS 스타일 추가
 st.markdown("""
     <style>
+    .champion-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /*gap: 10px;*/
+        justify-items: center;
+    }
     .champion-image {
         margin: 10px;
-        width: 80px;
-        height: 80px;
+        width: 50px;
+        height: 50px;
         display: block;
         border-radius: 50%;
     }
@@ -106,13 +112,15 @@ col1, col2 = st.columns([1, 4])
 
 # 왼쪽 컬럼 (사이드바 역할)
 with col1:
-    st.markdown('## Champions - AD')
+    st.markdown('Champions - AD')
+    ad_html = '<div class="champion-container">'
     for champion in champions_ad:
         name = champion["name"]
         image_url = champion["image_url"]
         st.markdown(f'<img src="{image_url}" alt="{name}" class="champion-image">', unsafe_allow_html=True)
 
-    st.markdown('## Champions - Support')
+    st.markdown('Champions - Support')
+    sup_html = '<div class="champion-container">'
     for champion in champions_sup:
         name = champion["name"]
         image_url = champion["image_url"]
