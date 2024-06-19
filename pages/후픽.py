@@ -12,12 +12,19 @@ st.markdown("""
     <style>
     /*페이지 padding값 수정*/
     .st-emotion-cache-1jicfl2 {
-        padding: 4rem 1rem 4rem 4rem;
+        padding: 4rem 1rem 4rem 1rem;
     }
     @media (min-width: 576px) {
         .st-emotion-cache-1jicfl2 {
         padding: 4rem 1rem 4rem 4rem;
         }
+    }
+    /*streamlit 자체 css 수정*/
+    .st-emotion-cache-1wmy9hl >div{
+        gap: 0;
+    }
+    .st-emotion-cache-13k62yr >header {
+        heigth: 0;
     }
     </style>
     """, unsafe_allow_html=True)
