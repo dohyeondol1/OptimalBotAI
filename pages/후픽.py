@@ -114,7 +114,7 @@ side_col, main_col = st.columns([1, 5])
 
 # 왼쪽 컬럼 (사이드바 역할)
 with side_col:
-    st.markdown('### Champions - AD')
+    st.markdown('### 원딜 챔피언')
     for i in range(0, len(champions_ad), 3):
         cols = st.columns(3)
         for j in range(3):
@@ -123,7 +123,7 @@ with side_col:
                 with cols[j]:
                     st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
 
-    st.markdown('### Champions - Support')
+    st.markdown('### 서폿 챔피언')
     for i in range(0, len(champions_sup), 3):
         cols = st.columns(3)
         for j in range(3):
