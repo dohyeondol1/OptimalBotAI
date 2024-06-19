@@ -108,13 +108,22 @@ side_col, main_col = st.columns([1, 5])
 # 왼쪽 컬럼 (사이드바 역할)
 with side_col:
     st.markdown('### Champions - AD')
-    for champion in champions_ad:
-        st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
+    for i in range(0, len(champions_ad), 3):
+        cols = st.columns(3)
+        for j in range(3):
+            if i + j < len(champions_ad):
+                champion = champions_ad[i + j]
+                with cols[j]:
+                    st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
 
     st.markdown('### Champions - Support')
-    for champion in champions_sup:
-        st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
-
+    for i in range(0, len(champions_sup), 3):
+        cols = st.columns(3)
+        for j in range(3):
+            if i + j < len(champions_sup):
+                champion = champions_sup[i + j]
+                with cols[j]:
+                    st.markdown(f'<a href="#" id="{champion["name"]}"><img src="{champion["image_url"]}" class="champion-image"></a>', unsafe_allow_html=True)
 # 오른쪽 컬럼 (메인 콘텐츠)
 with main_col:
     st.write("여기에 메인 콘텐츠를 추가합니다.")
