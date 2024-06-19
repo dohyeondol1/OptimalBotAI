@@ -20,13 +20,7 @@ st.markdown("""
         }
     }
 
-    .st-emotion-cache-1wmy9hl {
-        display: flex;
-        flex-direction: row;
-    }
-    .st-emotion-cache-1wmy9hl div {
-        display: none;
-    }
+    
     </style>
     """, unsafe_allow_html=True)
 
