@@ -152,7 +152,7 @@ with main_col:
             if st.button("응답 보기"):
                 try:
                     response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",  # Example model, replace with appropriate model
+                        model="gpt-4o",  # Example model, replace with appropriate model
                         messages=[
                             {"role": "system", "content": f"{selected_champions[0]}, {selected_champions[1]}의 조합에 대해 설명해주세요."},
                             {"role": "user", "content": "설명 보기"}
@@ -166,7 +166,7 @@ with main_col:
                     st.markdown("---")
 
                     response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",  # Example model, replace with appropriate model
+                        model="gpt-4o",  # Example model, replace with appropriate model
                         messages=[
                             {"role": "system", "content": f"{selected_champions[0]}, {selected_champions[1]}의 조합에 대응할 조합을 하나 설명해주세요."},
                             {"role": "user", "content": "설명 보기"}
